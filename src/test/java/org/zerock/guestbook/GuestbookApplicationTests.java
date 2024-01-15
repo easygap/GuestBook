@@ -19,7 +19,7 @@ class GuestbookApplicationTests {
 		IntStream.rangeClosed(1,300).forEach(i -> {
 			Guestbook guestbook = Guestbook.builder()
 					.title("Title...." + i)
-					.content("Content..." + i)
+					.content("Content...." + i)
 					.writer("user" + (i % 10))
 					.build();
 			System.out.println(guestbookRepository.save(guestbook));
