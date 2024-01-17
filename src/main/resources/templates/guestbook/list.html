@@ -4,19 +4,29 @@
 <th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
 
     <th:block th:fragment="content">
-        <h1 class="mt-4">GuestBook List Page</h1>
+        <h1 class="mt-4">GuestBook List Page
+            <span>
+                <a th:href="@{/guestbook/register}">
+                    <button type="button" class="btn btn-outline-primary">글 쓰 기</button>
+                </a>
+            </span>
+        </h1>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Title</th>
-                <th scope="col">Writer</th>
-                <th scope="col">Regdate</th>
+                <th scope="col">번호</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">작성일</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="dto : ${result.dtoList}" >
-                <th scope="row">[[${dto.gno}]]</th>
+                <th scope="row">
+                    <a th:href="@{/guestbook/read(gno = ${dto.gno}, page= ${result.page})}">
+                    [[${dto.gno}]]
+                    </a>
+                </th>
                 <td>[[${dto.title}]]</td>
                 <td>[[${dto.writer}]]</td>
                 <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
@@ -45,5 +55,33 @@
                 <a class="page-link" th:href="@{/guestbook/list(page = ${result.totalPage})}">맨 끝</a>
             </li>
         </ul> <!-- 추가되는 태그 끝 -->
+
+        <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">확인창</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>게시글을 저장하시겠습니까?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫 기</button>
+                        <button type="button" class="btn btn-primary">저 장</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            var msg = [[${msg}]];
+            console.log(msg);
+
+            if(msg){
+                $(".modal").modal();
+            }
+        </script>
     </th:block>
 </th:block>
