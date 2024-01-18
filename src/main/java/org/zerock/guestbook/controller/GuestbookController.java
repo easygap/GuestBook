@@ -66,8 +66,6 @@ public class GuestbookController {
     public String remove(long gno, RedirectAttributes redirectAttributes){
         log.info("gno: " + gno);
 
-        System.out.println("#@!^%$#@^^컨트롤러에서 gno의 값은: " + gno + " 입니다. @#%#@%#@^$#@^$#^$@^%@$");
-
         service.remove(gno);
 
         redirectAttributes.addFlashAttribute("msg", gno);
